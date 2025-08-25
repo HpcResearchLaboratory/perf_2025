@@ -1,0 +1,7 @@
+venv
+*.err
+*.out
+hydra_log/
+data/
+dataset/
+checkpoint/

@@ -1,5 +1,5 @@
 model: 
-  name: unet3d
+  name: unet3d_h100_custom
   type: cnn
   model_size: 499153191
 

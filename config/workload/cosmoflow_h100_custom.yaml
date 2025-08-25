@@ -1,5 +1,5 @@
 model: 
-  name: cosmoflow
+  name: cosmoflow_h100_custom
 
 framework: tensorflow
 

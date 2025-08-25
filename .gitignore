@@ -5,3 +5,4 @@ hydra_log/
 data/
 dataset/
 checkpoint/
+*.swp

@@ -142,14 +142,25 @@
 \begin{frame}
 	\frametitle{Objectives}
 	\begin{block}{General:}
-        Understand \alert{patterns in I/O operations and possible bottlenecks} in common
-        Machine Learning workloads
+		Understand \alert{patterns in I/O operations and possible bottlenecks} in common
+		Machine Learning workloads
 	\end{block}
-	\begin{block}{Específicos:}
+	\begin{block}{Especifics:}
 		\begin{itemize}
-			\item \textbf{Revisão bibliográfica}: Base teórica para o desenvolvimento do simulador.
-			\item \textbf{Implementação do Simulador}: Aplicar os conceitos de paralelismo assíncrono e hetereogêneo em CPUs e GPUs.
-			\item \textbf{Validação do simulador}: Ratificar \alert{aspectos computacionais e de desempenho} da implementação.
+			\item \textbf{Disk throughput}: Understand how disk throughput varies in training between epochs, checkpoints and when the number of training processes varies.
+
+			\item \textbf{GPU usage}: Know how the GPU usage (\%) behaves in those scenarios.
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\subsection{Justification}
+
+\begin{frame}
+	\frametitle{Justification}
+	\begin{block}{}
+		\begin{itemize}
+			\item By understanding those patterns and possible bottlenecks I hope to \alert{find some ideas and directions for further work}.
 		\end{itemize}
 	\end{block}
 \end{frame}
@@ -157,28 +168,94 @@
 \subsection{Related Works}
 
 \begin{frame}
-	\frametitle{Trabalhos Relacionados}
-	\begin{block}{\citeonline{aaby2010efficient}}
-		Focou na otimição de um simulador multiagente utilizando CUDA em multi-GPU, com comunicação MPI e foco em reduzir a latência. Resultados mostraram uma performance 100 vezes maior.
+	\frametitle{Related Work}
+	\begin{block}{\citeonline{io_machine_learning_applications}}
+		Surveys literature from 2019 to 2024 on the I/O challenges, patterns, and optimizations for machine learning applications on high-performance computing systems to identify gaps for future research.
 	\end{block}
 
-	\begin{block}{\citeonline{shekh2015hybrid}}
-		Portaram simuladores multiagente para multi-GPU e analisaram a escalabilidade. Resultados mostraram eficiência com populacoes de até 100 milhões de agentes.
+	\begin{block}{\citeonline{analyzing_the_io_patterns}}
+		This paper presents a methodology for analyzing the input/output (I/O) patterns of deep learning applications on high-performance computing (HPC) systems, applying it to codes using TensorFlow2 and PyTorch with the MNIST and CIFAR-10 datasets to understand performance bottlenecks.
 	\end{block}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Trabalhos Relacionados}
-	\begin{block}{\citeonline{cunha2022aperfeiccoamento}}
-		Focou na otimização paramétrica do modelo de espalhamento de dengue, obtendo resultados satisfatórios.
+	\frametitle{Related Work}
+	\begin{block}{\citeonline{understanding_and_leveraging_the_io_patterns_of_emerging_ml_analytics}}
+		This paper discusses the complex I/O patterns and challenges of emerging machine learning workflows used for large-scale scientific data analysis, proposes methods to optimize data transfers, and demonstrates performance gains with a medical application case study.
 	\end{block}
 
-	\begin{block}{\citeonline{lin2022evaluating}}
-		Mostrou a viabilidade da utilização do padrão \textit{Iso C++ 17 Parallel STL} em GPUs para a otimização de algoritmos paralelos em comparação com OpenMP, CUDA e o SYCL. Mostrou uma performance equivalente, com excessão de alguns casos específicos.
+	\begin{block}{\citeonline{characterizing_ml_io_workloads}}
+		This paper presents an in-depth I/O characterization of over 23,000 machine learning jobs from a one-year period on the Summit supercomputer, using the Darshan tracing tool to analyze how their behavior varies across different scientific domains and workload scales.
 	\end{block}
+\end{frame}
 
-	\begin{block}{\citeonline{gomez2023gpu}}
-		Implementou um solucionador de sistemas de equações diferenciais parciais em GPUs utilizando o padrão \textit{Iso C++ 17 Parallel STL} e o SDK da NVIDIA. Porém,resultou em uma performance inferior em comparação com o OpenMP.
+\section{Methodology (so far)}
+
+\begin{frame}
+	\frametitle{Methodology (so far)}
+	\begin{block}{}
+		\begin{itemize}
+			\item Simulation: dlio\_benchmark \cite{dlio_benchmark}.
+			\item The experiments are available at \url{https://github.com/HpcResearchLaboratory/perf_2025}.
+			      \begin{itemize}
+				      \item Custom workloads
+				      \item dlio\_benchmark (python venv :(, will try to use nix shell )
+				      \item Slurm script to perform all benchmarks
+			      \end{itemize}
+		\end{itemize}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Methodology (so far)}
+	\begin{block}{System}
+		\begin{table}[h!]
+			\centering
+			\caption{System Specifications for 'tupi4'}
+			\label{tab:system_specs}
+			\resizebox{\textwidth}{!}{%
+				\begin{tabular}{|l|l|}
+					\hline
+					\textbf{Component} & \textbf{Specification}                     \\ \hline
+					CPU                & i9-14900KF, 3.20 GHz, 32 threads, 24 cores \\ \hline
+					Memory (RAM)       & 128 GB DDR5                                \\ \hline
+					GPU                & NVIDIA GeForce RTX 4090                    \\ \hline
+					Storage            & 1.8 TB NVME                                \\ \hline
+					Motherboard        & Gigabyte Technology Co., Ltd. Z790 UD AX   \\ \hline
+				\end{tabular}%
+			}
+		\end{table}
+	\end{block}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Methodology (so far)}
+	\begin{block}{Workloads}
+		\begin{table}[h!]
+			\centering
+			\caption{Workflow Configuration Summary}
+			\label{tab:workflow_summary}
+			\resizebox{\textwidth}{!}{%
+				\begin{tabular}{|l|l|l|l|}
+					\hline
+					\textbf{Model Name}               & \textbf{Framework Name} & \textbf{Epochs} & \textbf{Checkpoints Enabled}      \\ \hline
+					cosmoflow\_h100\_custom           & tensorflow              & 1               & No                                \\ \hline
+					default\_custom                   & pytorch                 & 10              & No                                \\ \hline
+					megatron\_deepspeed\_LLNL\_custom & pytorch                 & 3               & Yes (every 2 steps)               \\ \hline
+					unet3d\_h100\_custom              & pytorch                 & 5               & Yes (after epoch 5, then every 2) \\ \hline
+				\end{tabular}%
+			}
+		\end{table}
+	\end{block}
+\end{frame}
+
+\section{Results (so far)}
+
+\begin{frame}
+	\frametitle{Results (so far)}
+	\begin{block}{Unet3d h100 custom: Training throughput x processes}
+
+		\includegraphics[width=0.8\textwidth]{./images/training_io.png}
 	\end{block}
 \end{frame}
 

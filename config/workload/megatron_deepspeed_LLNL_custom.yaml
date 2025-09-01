@@ -23,7 +23,6 @@ dataset:
   format: mmap_indexed_binary
   num_files_train: 1
   num_samples_per_file: 277203535
-  num_samples_per_file: 277
   record_length_bytes: 2048
   
 reader: 

@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=dlio_bench
-#SBATCH --partition=poti
+#SBATCH --partition=tupi
 #SBATCH --nodes=1
 #SBATCH --ntasks=8
 #SBATCH --time=10:00:00
@@ -14,8 +14,8 @@ VENV_DIR="${BASE_DIR}/venv"
 CONFIG_DIR="${BASE_DIR}/config"
 RESULTS_DIR="${BASE_DIR}/results"
 DLIO_DIR="${BASE_DIR}/dlio_benchmark"
-SCRATCH_DIR="$SCRATCH/dlio_data"
-BENCHMARKS=$(ls "${CONFIG_DIR}"/workload | sed 's/\.yaml$//')
+SCRATCH_DIR="${SCRATCH}dlio_data"
+BENCHMARKS=$(ls "${CONFIG_DIR}"/workload | sed 's/\.yaml$//' | xargs -0 -- basename)
 MACHINEFILE="nodes.$SLURM_JOB_ID"
 
 srun -l hostname | sort -n | awk '{print $2}' >"$MACHINEFILE"
@@ -47,6 +47,7 @@ function dlio_run() {
         echo "++++++++++++++++++++++Running data generation for: $bench ++++++++++++++++++++++"
         mpirun -np "$SLURM_NTASKS" \
             dlio_benchmark \
+	    --config-dir "$CONFIG_DIR" \
             workload="$bench" \
             ++workload.workflow.generate_data=True \
             ++workload.workflow.train=False \
@@ -56,6 +57,7 @@ function dlio_run() {
         echo "+++++++++++++++++++++++Running benchmark: $bench ++++++++++++++++++++++"
         mpirun -np "$SLURM_NTASKS" \
             dlio_benchmark \
+	    --config-dir "$CONFIG_DIR" \
             workload="$bench" \
             ++workload.workflow.generate_data=False \
             ++workload.workflow.train=True \
@@ -63,7 +65,7 @@ function dlio_run() {
         echo "+++++++++++++++++++++++Completed benchmark: $bench ++++++++++++++++++++++"
 
         echo "+++++++++++++++++++++++Copying results for: $bench ++++++++++++++++++++++"
-        cp -av "$SCRATCH_DIR/hydra_logs/$bench" "$RESULTS_DIR/$bench"
+        cp -av "$SCRATCH_DIR/hydra_log/$bench" "$RESULTS_DIR/$bench"
         echo "+++++++++++++++++++++++Completed copying results for: $bench ++++++++++++++++++++++"
     done
 

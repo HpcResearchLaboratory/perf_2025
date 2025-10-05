@@ -36,7 +36,9 @@ function dlio_setup() {
     source "$VENV_DIR/bin/activate"
 
     if [ ! -f "$VENV_DIR/bin/dlio_benchmark" ]; then
-        pip install -e "$DLIO_DIR"
+        pushd "$DLIO_DIR" || exit 1
+        pip install .
+        popd || exit 1
     fi
     popd || exit 1
 }
@@ -47,7 +49,7 @@ function dlio_run() {
         echo "++++++++++++++++++++++Running data generation for: $bench ++++++++++++++++++++++"
         mpirun -np "$SLURM_NTASKS" \
             dlio_benchmark \
-	    --config-dir "$CONFIG_DIR" \
+            --config-dir "$CONFIG_DIR" \
             workload="$bench" \
             ++workload.workflow.generate_data=True \
             ++workload.workflow.train=False \
@@ -57,7 +59,7 @@ function dlio_run() {
         echo "+++++++++++++++++++++++Running benchmark: $bench ++++++++++++++++++++++"
         mpirun -np "$SLURM_NTASKS" \
             dlio_benchmark \
-	    --config-dir "$CONFIG_DIR" \
+            --config-dir "$CONFIG_DIR" \
             workload="$bench" \
             ++workload.workflow.generate_data=False \
             ++workload.workflow.train=True \

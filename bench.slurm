@@ -1,8 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=dlio_bench
-#SBATCH --partition=lncc-gh200
 #SBATCH --nodes=1
-#SBATCH --ntasks=8
 #SBATCH --time=10:00:00
 #SBATCH --output=%x_%j.out
 #SBATCH --error=%x_%j.err
@@ -14,29 +12,35 @@ VENV_DIR="${BASE_DIR}/venv"
 CONFIG_DIR="${BASE_DIR}/config"
 RESULTS_DIR="${BASE_DIR}/results"
 DLIO_DIR="${BASE_DIR}/dlio_benchmark"
-SCRATCH_DIR="${SCRATCH}dlio_data"
+SCRATCH_DIR="${BASE_DIR}/dlio_data_${SLURM_JOB_ID}"
 BENCHMARKS=$(ls "${CONFIG_DIR}"/workload | sed 's/\.yaml$//' | xargs -0 -- basename)
 MACHINEFILE="nodes.$SLURM_JOB_ID"
+TASK_COUNTS=(1 2 4 6 8)
+
+module load arch_gpu_sc/current openmpi/4.1.6.15.1
 
 srun -l hostname | sort -n | awk '{print $2}' >"$MACHINEFILE"
-module load arch_gpu_sc/current openmpi/4.1.6.15.1
 mkdir -p "$SCRATCH_DIR" "$RESULTS_DIR"
 
 function cleanup() {
-    rm -f $MACHINEFILE
+    echo "Cleaning up resources..."
+    rm -f "$MACHINEFILE"
+    rm -rf "$SCRATCH_DIR"
+    echo "Cleanup complete."
 }
-
 trap cleanup EXIT SIGINT SIGTERM SIGHUP
 
 function dlio_setup() {
     pushd "$BASE_DIR" || exit 1
-    if [ ! -f "$VENV_DIR" ]; then
+    if [ ! -d "$VENV_DIR" ]; then
+        echo "Creating Python virtual environment..."
         python3 -m venv venv
     fi
 
     source "$VENV_DIR/bin/activate"
 
     if [ ! -f "$VENV_DIR/bin/dlio_benchmark" ]; then
+        echo "Installing dlio_benchmark..."
         pushd "$DLIO_DIR" || exit 1
         pip install .
         popd || exit 1
@@ -46,34 +50,44 @@ function dlio_setup() {
 
 function dlio_run() {
     pushd "$SCRATCH_DIR" || exit 1
-    for bench in $BENCHMARKS; do
-        echo "++++++++++++++++++++++Running data generation for: $bench ++++++++++++++++++++++"
-        mpirun -np "$SLURM_NTASKS" \
-            dlio_benchmark \
-            --config-dir "$CONFIG_DIR" \
-            workload="$bench" \
-            ++workload.workflow.generate_data=True \
-            ++workload.workflow.train=False \
-            ++workload.workflow.evaluation=False
-        echo "++++++++++++++++++++++Completed data generation for: $bench ++++++++++++++++++++++"
+    
+    for ntasks in "${TASK_COUNTS[@]}"; do
+        for bench in $BENCHMARKS; do
+            echo "======================================================================"
+            echo "Starting benchmark: $bench with $ntasks tasks"
+            echo "======================================================================"
 
-        echo "+++++++++++++++++++++++Running benchmark: $bench ++++++++++++++++++++++"
-        mpirun -np "$SLURM_NTASKS" \
-            dlio_benchmark \
-            --config-dir "$CONFIG_DIR" \
-            workload="$bench" \
-            ++workload.workflow.generate_data=False \
-            ++workload.workflow.train=True \
-            ++workload.workflow.evaluation=True
-        echo "+++++++++++++++++++++++Completed benchmark: $bench ++++++++++++++++++++++"
+            echo "--> Step 1: Generating data for $bench..."
+            mpirun -np "$ntasks" \
+                dlio_benchmark \
+                --config-dir "$CONFIG_DIR" \
+                workload="$bench" \
+                ++workload.workflow.generate_data=True \
+                ++workload.workflow.train=False \
+                ++workload.workflow.evaluation=False
 
-        echo "+++++++++++++++++++++++Copying results for: $bench ++++++++++++++++++++++"
-        cp -av "$SCRATCH_DIR/hydra_log/$bench" "$RESULTS_DIR/$bench"
-        echo "+++++++++++++++++++++++Completed copying results for: $bench ++++++++++++++++++++++"
+            echo "--> Step 2: Running benchmark for $bench..."
+            mpirun -np "$ntasks" \
+                dlio_benchmark \
+                --config-dir "$CONFIG_DIR" \
+                workload="$bench" \
+                ++workload.workflow.generate_data=False \
+                ++workload.workflow.train=True \
+                ++workload.workflow.evaluation=True
+
+            echo "--> Step 3: Copying results for $bench with $ntasks tasks..."
+            mkdir -p "$RESULTS_DIR/$bench/$ntasks"
+            cp -av "$SCRATCH_DIR/hydra_log/$bench"/* "$RESULTS_DIR/$bench/$ntasks/"
+            rm -rf "$SCRATCH_DIR/hydra_log/$bench"
+            
+            echo "--> Completed benchmark run for: $bench with $ntasks tasks."
+        done
     done
 
     popd || exit 1
 }
 
+echo "Starting DLIO benchmark suite."
 dlio_setup
 dlio_run
+echo "Benchmark suite finished successfully."

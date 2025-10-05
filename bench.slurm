@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=dlio_bench
-#SBATCH --partition=tupi
+#SBATCH --partition=lncc-gh200
 #SBATCH --nodes=1
 #SBATCH --ntasks=8
 #SBATCH --time=10:00:00
@@ -19,6 +19,7 @@ BENCHMARKS=$(ls "${CONFIG_DIR}"/workload | sed 's/\.yaml$//' | xargs -0 -- basen
 MACHINEFILE="nodes.$SLURM_JOB_ID"
 
 srun -l hostname | sort -n | awk '{print $2}' >"$MACHINEFILE"
+module load arch_gpu_sc/current openmpi/4.1.6.15.1
 mkdir -p "$SCRATCH_DIR" "$RESULTS_DIR"
 
 function cleanup() {

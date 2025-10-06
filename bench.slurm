@@ -1,6 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=dlio_bench
+#SBATCH --partition=lncc-gh200
 #SBATCH --nodes=1
+#SBATCH --ntasks=8
 #SBATCH --time=10:00:00
 #SBATCH --output=%x_%j.out
 #SBATCH --error=%x_%j.err
@@ -51,22 +53,30 @@ function dlio_setup() {
 function dlio_run() {
     pushd "$SCRATCH_DIR" || exit 1
     
+    echo "======================================================================"
+    echo "STEP 1: data generation"
+    echo "======================================================================"
+    for bench in $BENCHMARKS; do
+        echo "--> Generating data for: $bench using $SLURM_NTASKS tasks..."
+        mpirun -np "$SLURM_NTASKS" \
+            dlio_benchmark \
+            --config-dir "$CONFIG_DIR" \
+            workload="$bench" \
+            ++workload.workflow.generate_data=True \
+            ++workload.workflow.train=False \
+            ++workload.workflow.evaluation=False
+        echo "--> Data generation complete for: $bench"
+    done
+
+    echo "======================================================================"
+    echo "STEP 2: benchmark"
+    echo "======================================================================"
     for ntasks in "${TASK_COUNTS[@]}"; do
         for bench in $BENCHMARKS; do
-            echo "======================================================================"
-            echo "Starting benchmark: $bench with $ntasks tasks"
-            echo "======================================================================"
-
-            echo "--> Step 1: Generating data for $bench..."
-            mpirun -np "$ntasks" \
-                dlio_benchmark \
-                --config-dir "$CONFIG_DIR" \
-                workload="$bench" \
-                ++workload.workflow.generate_data=True \
-                ++workload.workflow.train=False \
-                ++workload.workflow.evaluation=False
-
-            echo "--> Step 2: Running benchmark for $bench..."
+            echo "----------------------------------------------------------------------"
+            echo "Running benchmark: $bench with $ntasks tasks"
+            echo "----------------------------------------------------------------------"
+            
             mpirun -np "$ntasks" \
                 dlio_benchmark \
                 --config-dir "$CONFIG_DIR" \
@@ -75,12 +85,12 @@ function dlio_run() {
                 ++workload.workflow.train=True \
                 ++workload.workflow.evaluation=True
 
-            echo "--> Step 3: Copying results for $bench with $ntasks tasks..."
+            echo "--> Copying results for $bench with $ntasks tasks..."
             mkdir -p "$RESULTS_DIR/$bench/$ntasks"
             cp -av "$SCRATCH_DIR/hydra_log/$bench"/* "$RESULTS_DIR/$bench/$ntasks/"
             rm -rf "$SCRATCH_DIR/hydra_log/$bench"
             
-            echo "--> Completed benchmark run for: $bench with $ntasks tasks."
+            echo "--> Completed benchmark run for: $bench with $ntasks tasks"
         done
     done
 

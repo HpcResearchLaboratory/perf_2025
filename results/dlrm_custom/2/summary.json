@@ -1,0 +1,122 @@
+{
+    "start": "2025-10-06T00:55:07.477360",
+    "num_accelerators": 2,
+    "num_hosts": 1,
+    "hostname": "sdumont2nd3008",
+    "metric": {
+        "train_au_percentage": [
+            7.708724958680378,
+            7.783407791861137
+        ],
+        "train_au_mean_percentage": 7.7460663752707575,
+        "train_au_meet_expectation": "fail",
+        "train_au_stdev_percentage": 0.037341416590379595,
+        "train_throughput_samples_per_second": [
+            2.3882860304198537,
+            2.4117433166666506
+        ],
+        "train_throughput_mean_samples_per_second": 2.400014673543252,
+        "train_throughput_stdev_samples_per_second": 0.011728643123398497,
+        "train_io_mean_MB_per_second": 1536.0093910676812,
+        "train_io_stdev_MB_per_second": 7.506331598975038,
+        "eval_au_percentage": [
+            0.000793159150146573,
+            0.0008407639614517351,
+            0.000708211593336796,
+            0.0007370180888849172
+        ],
+        "eval_au_mean_percentage": 0.0007697881984550053,
+        "eval_au_meet_expectation": "fail",
+        "eval_au_stdev_percentage": 5.1110954537792114e-05,
+        "eval_throughput_samples_per_second": [
+            1.0568500537851204,
+            1.1183710876848616,
+            1.0642963587817476,
+            1.1258454221139298
+        ],
+        "eval_throughput_mean_samples_per_second": 1.091340730591415,
+        "eval_throughput_stdev_samples_per_second": 0.030992816808088554,
+        "eval_io_mean_MB_per_second": 698.4580675785055,
+        "eval_io_stdev_MB_per_second": 19.835402757176674
+    },
+    "num_files_train": 1,
+    "num_files_eval": 1,
+    "num_samples_per_file": 1024,
+    "host_cpu_count": [
+        288
+    ],
+    "host_processor_name": "aarch64",
+    "potential_caching": [
+        1
+    ],
+    "host_cpuinfo": {
+        "BogoMIPS": "2000.00",
+        "Features": "fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm ssbs sb dcpodp sve2 sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 dgh",
+        "CPU implementer": "0x41",
+        "CPU architecture": "8",
+        "CPU variant": "0x0",
+        "CPU part": "0xd4f",
+        "CPU revision": "0"
+    },
+    "host_meminfo": {
+        "MemTotal": "898883328 kB",
+        "MemFree": "525805120 kB",
+        "MemAvailable": "810192064 kB",
+        "Buffers": "54528 kB",
+        "Cached": "353812032 kB",
+        "SwapCached": "0 kB",
+        "Active": "3097728 kB",
+        "Inactive": "352701824 kB",
+        "Active(anon)": "2171328 kB",
+        "Inactive(anon)": "41216 kB",
+        "Active(file)": "926400 kB",
+        "Inactive(file)": "352660608 kB",
+        "Unevictable": "3072 kB",
+        "Mlocked": "0 kB",
+        "SwapTotal": "0 kB",
+        "SwapFree": "0 kB",
+        "Zswap": "0 kB",
+        "Zswapped": "0 kB",
+        "Dirty": "512 kB",
+        "Writeback": "0 kB",
+        "AnonPages": "1945600 kB",
+        "Mapped": "539584 kB",
+        "Shmem": "271488 kB",
+        "KReclaimable": "936704 kB",
+        "Slab": "8988224 kB",
+        "SReclaimable": "936704 kB",
+        "SUnreclaim": "8051520 kB",
+        "KernelStack": "239808 kB",
+        "PageTables": "16384 kB",
+        "SecPageTables": "0 kB",
+        "NFS_Unstable": "0 kB",
+        "Bounce": "0 kB",
+        "WritebackTmp": "0 kB",
+        "CommitLimit": "449441664 kB",
+        "Committed_AS": "4027840 kB",
+        "VmallocTotal": "137168158720 kB",
+        "VmallocUsed": "820928 kB",
+        "VmallocChunk": "0 kB",
+        "Percpu": "1198080 kB",
+        "HardwareCorrupted": "0 kB",
+        "AnonHugePages": "0 kB",
+        "ShmemHugePages": "0 kB",
+        "ShmemPmdMapped": "0 kB",
+        "FileHugePages": "0 kB",
+        "FilePmdMapped": "0 kB",
+        "CmaTotal": "0 kB",
+        "CmaFree": "0 kB",
+        "HugePages_Total": "0",
+        "HugePages_Free": "0",
+        "HugePages_Rsvd": "0",
+        "HugePages_Surp": "0",
+        "Hugepagesize": "524288 kB",
+        "Hugetlb": "0 kB"
+    },
+    "host_memory_GB": [
+        857.241943359375
+    ],
+    "data_size_per_host_GB": 640.0,
+    "epochs": 2,
+    "end": "2025-10-06T01:25:04.831670"
+}

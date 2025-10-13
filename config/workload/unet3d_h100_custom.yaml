@@ -1,42 +1,42 @@
-model: 
+model:
   name: unet3d_h100_custom
   type: cnn
-  model_size: 499153191
+  model_size: 1024
 
 framework: pytorch
 
 workflow:
-  generate_data: False
+  generate_data: True
   train: True
-  checkpoint: True
+  checkpoint: False
 
 dataset:
   data_folder: data/unet3d/
   format: npz
-  num_files_train: 64
+  num_files_train: 2
   num_samples_per_file: 1
-  record_length_bytes: 1048576
-  record_length_bytes_stdev: 524288
-  record_length_bytes_resize: 262144
+  record_length_bytes: 1024
+  record_length_bytes_stdev: 0
+  record_length_bytes_resize: 1024
 
 reader:
   data_loader: pytorch
-  batch_size: 2
+  batch_size: 1
   read_threads: 1
   file_shuffle: seed
   sample_shuffle: seed
 
 train:
-  epochs: 2
-  computation_time: 0.1
+  epochs: 1
+  computation_time: 0.01
 
 checkpoint:
   checkpoint_folder: checkpoints/unet3d
-  checkpoint_after_epoch: 2
+  checkpoint_after_epoch: 1
   epochs_between_checkpoints: 1
 
 metric:
   au: 0.90
 
-profiling: 
+profiling:
   profiler: iostat

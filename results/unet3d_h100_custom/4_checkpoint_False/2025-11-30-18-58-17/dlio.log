@@ -1,0 +1,73 @@
+[OUTPUT] 2025-11-30T18:58:20.509363 Running DLIO [Training & Evaluation] with 4 process(es)
+[OUTPUT] 2025-11-30T18:58:20.519034 Max steps per epoch: 6 = 1 * 168 / 7 / 4 (samples per file * num files / batch size / comm size)
+[OUTPUT] 2025-11-30T18:58:20.519148 Steps per eval: 0 = 1 * 0 / 1 / 4 (samples per file * num files / batch size eval / comm size)
+[OUTPUT] 2025-11-30T18:58:20.523364 Starting epoch 1: 6 steps expected
+[OUTPUT] 2025-11-30T18:58:20.523575 Starting block 1
+[OUTPUT] 2025-11-30T18:58:44.250703 Ending block 1 - 6 steps completed in 23.73 s
+[OUTPUT] 2025-11-30T18:58:44.255026 Epoch 1 - Block 1 [Training] Accelerator Utilization [AU] (%): 20.4600
+[OUTPUT] 2025-11-30T18:58:44.255107 Epoch 1 - Block 1 [Training] Throughput (samples/second): 14.1724
+[OUTPUT] 2025-11-30T18:58:44.255155 Epoch 1 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T18:58:44.255721 Ending epoch 1 - 6 steps completed in 23.73 s
+[OUTPUT] 2025-11-30T18:58:44.256465 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T18:58:44.280133 Ending eval - 0 steps completed in 0.02 s
+[OUTPUT] 2025-11-30T18:58:44.282668 Epoch 1 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T18:58:44.282736 Epoch 1 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T18:58:44.335054 Starting epoch 2: 6 steps expected
+[OUTPUT] 2025-11-30T18:58:44.335467 Starting block 1
+[OUTPUT] 2025-11-30T18:59:07.856666 Ending block 1 - 6 steps completed in 23.52 s
+[OUTPUT] 2025-11-30T18:59:07.858225 Epoch 2 - Block 1 [Training] Accelerator Utilization [AU] (%): 20.6044
+[OUTPUT] 2025-11-30T18:59:07.858287 Epoch 2 - Block 1 [Training] Throughput (samples/second): 14.2733
+[OUTPUT] 2025-11-30T18:59:07.858331 Epoch 2 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T18:59:07.858795 Ending epoch 2 - 6 steps completed in 23.52 s
+[OUTPUT] 2025-11-30T18:59:07.859496 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T18:59:07.862736 Ending eval - 0 steps completed in 0.00 s
+[OUTPUT] 2025-11-30T18:59:07.863495 Epoch 2 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T18:59:07.863552 Epoch 2 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T18:59:07.863995 Starting epoch 3: 6 steps expected
+[OUTPUT] 2025-11-30T18:59:07.864244 Starting block 1
+[OUTPUT] 2025-11-30T18:59:31.371527 Ending block 1 - 6 steps completed in 23.51 s
+[OUTPUT] 2025-11-30T18:59:31.372859 Epoch 3 - Block 1 [Training] Accelerator Utilization [AU] (%): 20.4644
+[OUTPUT] 2025-11-30T18:59:31.372925 Epoch 3 - Block 1 [Training] Throughput (samples/second): 14.1757
+[OUTPUT] 2025-11-30T18:59:31.372968 Epoch 3 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T18:59:31.373342 Ending epoch 3 - 6 steps completed in 23.51 s
+[OUTPUT] 2025-11-30T18:59:31.374031 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T18:59:31.375372 Ending eval - 0 steps completed in 0.00 s
+[OUTPUT] 2025-11-30T18:59:31.376078 Epoch 3 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T18:59:31.376129 Epoch 3 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T18:59:31.376534 Starting epoch 4: 6 steps expected
+[OUTPUT] 2025-11-30T18:59:31.376787 Starting block 1
+[OUTPUT] 2025-11-30T18:59:54.884335 Ending block 1 - 6 steps completed in 23.51 s
+[OUTPUT] 2025-11-30T18:59:54.885655 Epoch 4 - Block 1 [Training] Accelerator Utilization [AU] (%): 20.5205
+[OUTPUT] 2025-11-30T18:59:54.885722 Epoch 4 - Block 1 [Training] Throughput (samples/second): 14.2152
+[OUTPUT] 2025-11-30T18:59:54.885766 Epoch 4 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T18:59:54.886146 Ending epoch 4 - 6 steps completed in 23.51 s
+[OUTPUT] 2025-11-30T18:59:54.886831 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T18:59:54.888554 Ending eval - 0 steps completed in 0.00 s
+[OUTPUT] 2025-11-30T18:59:54.889261 Epoch 4 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T18:59:54.889316 Epoch 4 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T18:59:54.889729 Starting epoch 5: 6 steps expected
+[OUTPUT] 2025-11-30T18:59:54.889981 Starting block 1
+[OUTPUT] 2025-11-30T19:00:18.380530 Ending block 1 - 6 steps completed in 23.49 s
+[OUTPUT] 2025-11-30T19:00:18.381873 Epoch 5 - Block 1 [Training] Accelerator Utilization [AU] (%): 20.5305
+[OUTPUT] 2025-11-30T19:00:18.381940 Epoch 5 - Block 1 [Training] Throughput (samples/second): 14.2222
+[OUTPUT] 2025-11-30T19:00:18.381986 Epoch 5 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T19:00:18.382361 Ending epoch 5 - 6 steps completed in 23.49 s
+[OUTPUT] 2025-11-30T19:00:18.383061 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T19:00:18.384422 Ending eval - 0 steps completed in 0.00 s
+[OUTPUT] 2025-11-30T19:00:18.385125 Epoch 5 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T19:00:18.385176 Epoch 5 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T19:00:18.386253 Saved outputs in /scratch/mhm/pablo.hugen2/perf_2025/dlio_data_146062/hydra_log/unet3d_h100_custom/2025-11-30-18-58-17
+[OUTPUT] Averaged metric over all steps/epochs
+[METRIC] ==========================================================
+[METRIC] Number of Simulated Accelerators: 4 
+[METRIC] Training Accelerator Utilization [AU] (%): 19.7543 (0.0390)
+[METRIC] Training Throughput (samples/second): 13.6844 (0.0271)
+[METRIC] Training I/O Throughput (MB/second): 1913.2053 (3.7949)
+[METRIC] train_au_meet_expectation: fail
+[METRIC] Eval Accelerator Utilization [AU] (%): 0.0000 (0.0000)
+[METRIC] Eval Throughput (samples/second): 0.000000 (0.000000)
+[METRIC] Eval Throughput (MB/second): 0.000000 (0.000000)
+[METRIC] eval_au_meet_expectation: fail
+[METRIC] ==========================================================
+
+[OUTPUT] 2025-11-30T19:00:18.391430 outputs saved in RANKID_output.json

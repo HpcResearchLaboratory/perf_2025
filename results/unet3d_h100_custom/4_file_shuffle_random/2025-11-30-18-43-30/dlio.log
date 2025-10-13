@@ -1,0 +1,77 @@
+[OUTPUT] 2025-11-30T18:43:33.435463 Running DLIO [Training & Evaluation & Checkpointing] with 4 process(es)
+[OUTPUT] 2025-11-30T18:43:33.447330 Model size: 0.000010 GB 
+[OUTPUT] 2025-11-30T18:43:33.447505 Total checkpoint size: 0.000010 GB 
+[OUTPUT] 2025-11-30T18:43:33.447590 Max steps per epoch: 6 = 1 * 168 / 7 / 4 (samples per file * num files / batch size / comm size)
+[OUTPUT] 2025-11-30T18:43:33.447654 Steps per eval: 0 = 1 * 0 / 1 / 4 (samples per file * num files / batch size eval / comm size)
+[OUTPUT] 2025-11-30T18:43:33.451492 Starting epoch 1: 6 steps expected
+[OUTPUT] 2025-11-30T18:43:33.451703 Starting block 1
+[OUTPUT] 2025-11-30T18:43:41.079206 Ending block 1 - 6 steps completed in 7.63 s
+[OUTPUT] 2025-11-30T18:43:41.083398 Epoch 1 - Block 1 [Training] Accelerator Utilization [AU] (%): 60.5297
+[OUTPUT] 2025-11-30T18:43:41.083475 Epoch 1 - Block 1 [Training] Throughput (samples/second): 41.9310
+[OUTPUT] 2025-11-30T18:43:41.083523 Epoch 1 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T18:43:41.084072 Ending epoch 1 - 6 steps completed in 7.63 s
+[OUTPUT] 2025-11-30T18:43:41.084807 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T18:43:41.128426 Ending eval - 0 steps completed in 0.04 s
+[OUTPUT] 2025-11-30T18:43:41.130919 Epoch 1 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T18:43:41.130992 Epoch 1 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T18:43:41.187500 Starting epoch 2: 6 steps expected
+[OUTPUT] 2025-11-30T18:43:41.187917 Starting block 1
+[OUTPUT] 2025-11-30T18:43:48.588599 Ending block 1 - 6 steps completed in 7.40 s
+[OUTPUT] 2025-11-30T18:43:48.589876 Epoch 2 - Block 1 [Training] Accelerator Utilization [AU] (%): 62.0749
+[OUTPUT] 2025-11-30T18:43:48.589942 Epoch 2 - Block 1 [Training] Throughput (samples/second): 43.0015
+[OUTPUT] 2025-11-30T18:43:48.589986 Epoch 2 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T18:43:48.590456 Ending epoch 2 - 6 steps completed in 7.40 s
+[OUTPUT] 2025-11-30T18:43:48.591170 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T18:43:48.594497 Ending eval - 0 steps completed in 0.00 s
+[OUTPUT] 2025-11-30T18:43:48.595253 Epoch 2 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T18:43:48.595311 Epoch 2 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T18:43:48.595736 Starting epoch 3: 6 steps expected
+[OUTPUT] 2025-11-30T18:43:48.595985 Starting block 1
+[OUTPUT] 2025-11-30T18:43:55.958597 Ending block 1 - 6 steps completed in 7.36 s
+[OUTPUT] 2025-11-30T18:43:55.959887 Epoch 3 - Block 1 [Training] Accelerator Utilization [AU] (%): 62.3122
+[OUTPUT] 2025-11-30T18:43:55.959953 Epoch 3 - Block 1 [Training] Throughput (samples/second): 43.1645
+[OUTPUT] 2025-11-30T18:43:55.959999 Epoch 3 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T18:43:55.960401 Ending epoch 3 - 6 steps completed in 7.36 s
+[OUTPUT] 2025-11-30T18:43:55.961095 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T18:43:55.962475 Ending eval - 0 steps completed in 0.00 s
+[OUTPUT] 2025-11-30T18:43:55.963179 Epoch 3 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T18:43:55.963232 Epoch 3 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T18:43:55.963651 Starting epoch 4: 6 steps expected
+[OUTPUT] 2025-11-30T18:43:55.963905 Starting block 1
+[OUTPUT] 2025-11-30T18:44:03.308630 Ending block 1 - 6 steps completed in 7.34 s
+[OUTPUT] 2025-11-30T18:44:03.309930 Epoch 4 - Block 1 [Training] Accelerator Utilization [AU] (%): 63.0400
+[OUTPUT] 2025-11-30T18:44:03.309996 Epoch 4 - Block 1 [Training] Throughput (samples/second): 43.6696
+[OUTPUT] 2025-11-30T18:44:03.310040 Epoch 4 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T18:44:03.310437 Ending epoch 4 - 6 steps completed in 7.35 s
+[OUTPUT] 2025-11-30T18:44:03.311132 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T18:44:03.312445 Ending eval - 0 steps completed in 0.00 s
+[OUTPUT] 2025-11-30T18:44:03.313154 Epoch 4 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T18:44:03.313206 Epoch 4 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T18:44:03.313618 Starting epoch 5: 6 steps expected
+[OUTPUT] 2025-11-30T18:44:03.313875 Starting block 1
+[OUTPUT] 2025-11-30T18:44:10.685543 Ending block 1 - 6 steps completed in 7.37 s
+[OUTPUT] 2025-11-30T18:44:10.686822 Epoch 5 - Block 1 [Training] Accelerator Utilization [AU] (%): 62.0532
+[OUTPUT] 2025-11-30T18:44:10.686910 Epoch 5 - Block 1 [Training] Throughput (samples/second): 42.9862
+[OUTPUT] 2025-11-30T18:44:10.686955 Epoch 5 - Block 1 [Training] Computation time per step (second): 0.3234+/-0.0000 (set value: {'mean': 0.323})
+[OUTPUT] 2025-11-30T18:44:10.687182 Starting saving checkpoint 1 after total step 6 for epoch 5
+[OUTPUT] 2025-11-30T18:44:10.693604 Finished saving checkpoint 1 for epoch 5 in 0.0064 s; Throughput: 0.0015 GB/s
+[OUTPUT] 2025-11-30T18:44:10.694542 Ending epoch 5 - 6 steps completed in 7.38 s
+[OUTPUT] 2025-11-30T18:44:10.695215 Starting eval - 0 steps expected
+[OUTPUT] 2025-11-30T18:44:10.696562 Ending eval - 0 steps completed in 0.00 s
+[OUTPUT] 2025-11-30T18:44:10.697282 Epoch 5 [Eval] Accelerator Utilization [AU] (%): 0.0000
+[OUTPUT] 2025-11-30T18:44:10.697335 Epoch 5 [Eval] Throughput (samples/second): 0.0000
+[OUTPUT] 2025-11-30T18:44:10.698443 Saved outputs in /scratch/mhm/pablo.hugen2/perf_2025/dlio_data_146062/hydra_log/unet3d_h100_custom/2025-11-30-18-43-30
+[OUTPUT] Averaged metric over all steps/epochs
+[METRIC] ==========================================================
+[METRIC] Number of Simulated Accelerators: 4 
+[METRIC] Training Accelerator Utilization [AU] (%): 57.1887 (0.4303)
+[METRIC] Training Throughput (samples/second): 39.6164 (0.2985)
+[METRIC] Training I/O Throughput (MB/second): 5538.7449 (41.7329)
+[METRIC] train_au_meet_expectation: fail
+[METRIC] Eval Accelerator Utilization [AU] (%): 0.0000 (0.0000)
+[METRIC] Eval Throughput (samples/second): 0.000000 (0.000000)
+[METRIC] Eval Throughput (MB/second): 0.000000 (0.000000)
+[METRIC] eval_au_meet_expectation: fail
+[METRIC] ==========================================================
+
+[OUTPUT] 2025-11-30T18:44:10.703341 outputs saved in RANKID_output.json

@@ -1,0 +1,5 @@
+- workload=unet3d_h100_custom
+- ++workload.workflow.generate_data=False
+- ++workload.workflow.train=True
+- ++workload.workflow.evaluation=True
+- ++workload.dataset.record_length_bytes=536870912

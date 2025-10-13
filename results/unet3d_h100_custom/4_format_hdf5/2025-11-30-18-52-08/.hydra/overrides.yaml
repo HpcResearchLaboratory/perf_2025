@@ -1,0 +1,5 @@
+- workload=unet3d_h100_custom
+- ++workload.workflow.generate_data=True
+- ++workload.workflow.train=False
+- ++workload.workflow.evaluation=False
+- ++workload.dataset.format=hdf5

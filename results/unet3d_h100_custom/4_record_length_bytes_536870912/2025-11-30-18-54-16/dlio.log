@@ -1,0 +1,12 @@
+[OUTPUT] 2025-11-30T18:54:19.911321 Running DLIO [Generating data & Checkpointing] with 4 process(es)
+[OUTPUT] 2025-11-30T18:54:19.916563 Starting data generation
+[OUTPUT] 2025-11-30T18:55:51.260074 Generation done
+[OUTPUT] 2025-11-30T18:55:51.267096 Model size: 0.000010 GB 
+[OUTPUT] 2025-11-30T18:55:51.267201 Total checkpoint size: 0.000010 GB 
+[OUTPUT] 2025-11-30T18:55:51.269774 Saved outputs in /scratch/mhm/pablo.hugen2/perf_2025/dlio_data_146062/hydra_log/unet3d_h100_custom/2025-11-30-18-54-16
+[OUTPUT] Averaged metric over all steps/epochs
+[METRIC] ==========================================================
+[METRIC] Number of Simulated Accelerators: 4 
+[METRIC] ==========================================================
+
+[OUTPUT] 2025-11-30T18:55:51.273849 outputs saved in RANKID_output.json

@@ -35,7 +35,6 @@ The entire workflow (benchmarking + analysis) is controlled from a single **Jupy
 - Python >= 3.10
 - [uv](https://docs.astral.sh/uv/) package manager
 - MPI implementation (OpenMPI, MPICH, etc.)
-- SLURM workload manager (for cluster execution)
 
 ## Quick Start
 
@@ -44,12 +43,6 @@ The entire workflow (benchmarking + analysis) is controlled from a single **Jupy
 ```bash
 git clone --recurse-submodules https://github.com/HpcResearchLaboratory/perf_2025.git
 cd perf_2025
-```
-
-If you already cloned without `--recurse-submodules`:
-
-```bash
-git submodule update --init --recursive
 ```
 
 ### 2. Install uv
@@ -73,30 +66,13 @@ uv sync
 uv run jupyter notebook io_patterns_analysis.ipynb
 ```
 
-## Workflow
-
-The notebook `analysis/io_patterns_analysis.ipynb` serves as the **central controller** for the entire experiment:
-
-### Sections
-
-1. **Environment Setup** - Configure modules, paths, and initialize dependencies
-2. **Experimental Design** - Load and visualize the experiment matrix from CSV
-3. **Benchmark Execution** - Run DLIO benchmarks via shell commands
-   - Run single experiments
-   - Run all pending experiments
-   - Automatic CSV update on completion
-4. **Results Analysis** - Load results, generate plots, statistical analysis
-5. **Cleanup** - Remove scratch directories
 
 ### Experimental Design (CSV)
 
 The file `analysis/experimental_design.csv` defines all experiments:
 
 ```csv
-model,epochs,processes,run
-cosmoflow_h100_custom,1,1,N
-cosmoflow_h100_custom,1,2,N
-default_custom,10,1,Y
+
 ...
 ```
 
@@ -117,17 +93,6 @@ The notebook automatically updates this file as benchmarks complete.
 **Response Variables:**
 - Accelerator Usage (AU) - percentage
 - I/O Throughput (MB/s)
-
-## System Requirements (Reference)
-
-The benchmarks were originally run on:
-
-| Component | Specification |
-|-----------|---------------|
-| CPU | 4x ARM Neoverse-V2 (288 cores) |
-| Memory | 857 GiB |
-| GPU | 4x NVIDIA GH200 (120GB each) |
-| Storage | 1.8 TB NVMe |
 
 ## Configuration
 

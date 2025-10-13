@@ -1,4 +1,0 @@
-- workload=dlrm_custom
-- ++workload.workflow.generate_data=False
-- ++workload.workflow.train=True
-- ++workload.workflow.evaluation=True

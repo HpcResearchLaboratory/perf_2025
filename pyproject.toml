@@ -1,0 +1,15 @@
+[project]
+name = "dlio-io-analysis"
+version = "0.1.0"
+description = "I/O Patterns and Bottlenecks in Deep Learning Workloads"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "jupyter>=1.0.0",
+    "pandas>=1.5.0",
+    "matplotlib>=3.5.0",
+    "seaborn>=0.12.0",
+]
+
+[tool.setuptools]
+packages = []

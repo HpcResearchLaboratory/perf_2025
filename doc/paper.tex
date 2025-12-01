@@ -1,20 +1,18 @@
 \documentclass[acmsmall,natbib=false]{template/acmart}
 
 \AtBeginDocument{\providecommand\BibTeX{{Bib\TeX}}}
-\setcopyright{acmlicensed}
+\setcopyright{none}
 \copyrightyear{2025}
 \acmYear{2025}
-\acmDOI{XXXXXXX.XXXXXXX}
 
-\acmJournal{JACM}
-\acmVolume{37}
-\acmNumber{4}
-\acmArticle{111}
-\acmMonth{8}
+\acmConference[CSPA 2025/2]{Computer Systems Performance Analysis}{December 2025}{UFRGS, Porto Alegre, Brazil}
+\acmMonth{12}
 
 \RequirePackage[datamodel=acmdatamodel,style=acmauthoryear]{biblatex}
+\usepackage{booktabs}
+\usepackage{graphicx}
 
-\addbibresource{references}
+\addbibresource{references.bib}
 
 \begin{document}
 
@@ -30,52 +28,189 @@
 	\country{Brazil}
 }
 
-\renewcommand{\shortauthors}{Trovato et al.}
+\renewcommand{\shortauthors}{Hugen}
 
 \begin{abstract}
-	TODO
+This report analyzes I/O performance in deep learning workloads using the DLIO benchmark on NVIDIA GH200 nodes. We measured accelerator utilization (AU) and I/O throughput while varying process count, data format, read threads, batch size, and shuffling strategy. Results show that HDF5 format achieved 97.5\% AU compared to 58.9\% for NPZ, 6 processes yielded peak throughput of 10.5~GB/s, and 8 read threads provided 3x improvement over single-threaded reads. Shuffling had no measurable impact on performance.
 \end{abstract}
 
-
-\keywords{}
+\keywords{Deep Learning, I/O Performance, HPC, DLIO Benchmark}
 
 \maketitle
 
-\section{Introduction}\label{sec:intro}
+\section{Introduction}
 
-% Contextualization
+Deep learning training requires continuous data transfer from storage to accelerators. When data loading cannot match computation speed, accelerators remain idle, reducing training efficiency. \cite{characterizing_ml_io_workloads} characterized I/O patterns in over 23,000 ML jobs on the Summit supercomputer, showing that ML workloads generate small, random reads across many files---contrasting with traditional HPC applications that perform large sequential accesses.
 
-% Problematic
+\cite{clairvoyant_prefetching_for_distributed_ml_io} reported that I/O can consume up to 85\% of training time in distributed deep learning. Given that training represents a significant cost in ML pipelines \cite{io_machine_learning_applications}, understanding I/O bottlenecks is essential for optimization.
 
-% Objective
+This report measures how configuration parameters affect I/O performance in the UNet3D workload using the DLIO benchmark. We focus on two metrics: Accelerator Utilization (AU), the percentage of time accelerators spend computing rather than waiting for data, and I/O throughput in MB/s.
 
-% Related Work
+\section{Background}
 
-\section{Background}\label{sec:background}
+Previous work has analyzed I/O patterns in deep learning. \cite{analyzing_the_io_patterns} presented a methodology for characterizing I/O in TensorFlow and PyTorch applications. \cite{understanding_and_leveraging_the_io_patterns_of_emerging_ml_analytics} examined I/O challenges in ML workflows for scientific data analysis and demonstrated optimization techniques.
 
-% Brief Overview of Machine Learning and Deep Learning Algos
+The Deep Learning I/O (DLIO) benchmark \cite{dlio_benchmark} emulates I/O behavior of deep learning models without actual training, allowing isolation of I/O performance from computation overhead.
 
-% Brief Overview of I/O into Machine learning algos
+\section{Experimental Setup}
 
-\section{Experimental setup}\label{sec:methods}
+Experiments ran on PCAD cluster nodes equipped with NVIDIA GH200 Grace Hopper Superchips. Each node contains a 72-core ARM Neoverse-V2 CPU, 480~GiB RAM, and one NVIDIA GH200 GPU with 96~GB HBM3 memory. Storage uses a parallel filesystem.
 
-% Explain DLIO benchmark
+We configured the UNet3D workload with NPZ format, 32 training files, 1 sample per file, 262~KB record length, batch size 2, and 1 read thread as baseline. We then varied individual parameters: process count (1, 2, 4, 6, 8), data format (NPZ, PNG, HDF5), read threads (1, 8, 16), batch size (1, 4, 14), shuffling (file and sample shuffle on/off), and record size (10~MB, 512~MB).
 
-% Explain the setup in PCAD
+\section{Results}
 
-% Explain the Workloads and configurations
+\subsection{Process Scaling}
 
-\section{Results}\label{sec:results}
+Table~\ref{tab:process-scaling} shows AU and throughput as process count increases.
 
-% For each benchmark explain the I/O metrics obtained
+\begin{table}[h]
+\centering
+\caption{Process Scaling}
+\label{tab:process-scaling}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Processes} & \textbf{AU (\%)} & \textbf{I/O (MB/s)} \\
+\midrule
+1 & 33.67 & 974 \\
+2 & 36.37 & 2,001 \\
+4 & 58.85 & 5,699 \\
+6 & 86.52 & 10,475 \\
+8 & 77.94 & 9,437 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-% Plots and tables
+Peak performance occurred at 6 processes (86.5\% AU, 10.5~GB/s). At 8 processes, both metrics decreased. Throughput scaled approximately linearly from 1 to 6 processes.
 
-\section{Conclusions}\label{sec:results}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{images/accelerator_usage.png}
+\caption{Accelerator utilization across parameter configurations.}
+\label{fig:au}
+\end{figure}
 
-% Summarize the problems and patterns
+\subsection{Data Format}
 
-% Present future works and directions
+Table~\ref{tab:format} compares storage formats at 4 processes.
+
+\begin{table}[h]
+\centering
+\caption{Data Format Comparison}
+\label{tab:format}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Format} & \textbf{AU (\%)} & \textbf{I/O (MB/s)} \\
+\midrule
+NPZ & 58.85 & 5,699 \\
+PNG & 21.08 & 2,042 \\
+HDF5 & 97.53 & 9,447 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+HDF5 achieved 97.5\% AU and 66\% higher throughput than NPZ. PNG achieved only 21\% AU due to decompression overhead.
+
+\subsection{Read Threads}
+
+Table~\ref{tab:threads} shows the effect of parallel read threads at 4 processes.
+
+\begin{table}[h]
+\centering
+\caption{Read Threads}
+\label{tab:threads}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Threads} & \textbf{AU (\%)} & \textbf{I/O (MB/s)} \\
+\midrule
+1 & 27.51 & 2,664 \\
+8 & 80.87 & 7,833 \\
+16 & 80.50 & 7,797 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Increasing from 1 to 8 threads improved AU from 27.5\% to 80.9\%. No improvement occurred between 8 and 16 threads.
+
+\subsection{Batch Size}
+
+Table~\ref{tab:batch} shows batch size effects at 4 processes.
+
+\begin{table}[h]
+\centering
+\caption{Batch Size}
+\label{tab:batch}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Batch Size} & \textbf{AU (\%)} & \textbf{I/O (MB/s)} \\
+\midrule
+1 & 98.44 & 1,661 \\
+4 & 62.36 & 3,834 \\
+14 & 62.26 & 7,538 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Batch size 1 achieved 98.4\% AU but only 1.7~GB/s throughput. Batch size 14 achieved 7.5~GB/s but 62.3\% AU. The workload shifts from compute-bound (small batches) to I/O-bound (large batches).
+
+\subsection{Shuffling}
+
+Table~\ref{tab:shuffle} shows shuffling effects at 4 processes.
+
+\begin{table}[h]
+\centering
+\caption{Shuffling Strategies}
+\label{tab:shuffle}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Configuration} & \textbf{AU (\%)} & \textbf{I/O (MB/s)} \\
+\midrule
+File shuffle off & 57.64 & 5,583 \\
+File shuffle random & 57.19 & 5,539 \\
+Sample shuffle off & 57.58 & 5,577 \\
+Sample shuffle random & 58.00 & 5,618 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All configurations performed within 1\% of each other. Shuffling did not degrade performance on this storage system.
+
+\subsection{Record Size}
+
+Table~\ref{tab:record} shows record size effects at 4 processes.
+
+\begin{table}[h]
+\centering
+\caption{Record Size}
+\label{tab:record}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Size} & \textbf{AU (\%)} & \textbf{I/O (MB/s)} \\
+\midrule
+10 MB & 72.87 & 505 \\
+512 MB & 19.83 & 7,034 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Larger records (512~MB) achieved 14x higher throughput than smaller records (10~MB) but lower AU (19.8\% vs 72.9\%).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{images/io_throughput.png}
+\caption{I/O throughput across parameter configurations.}
+\label{fig:io}
+\end{figure}
+
+\section{Discussion}
+
+The results show that I/O performance depends strongly on configuration. HDF5 format and 8 read threads provided the largest improvements. Process scaling beyond 6 reduced performance, suggesting resource contention. Batch size presents a trade-off: small batches maximize AU but limit throughput, while large batches do the opposite.
+
+These measurements apply to the specific hardware and workload tested. Different storage systems, file sizes, or access patterns may yield different results.
+
+\section{Conclusions}
+
+We measured I/O performance of the UNet3D workload on NVIDIA GH200 nodes. Key findings: HDF5 format achieved 97.5\% AU; 6 processes provided peak throughput; 8 read threads improved AU by 3x; shuffling had no measurable impact. Future work could extend this analysis to other workloads and storage configurations.
 
 \printbibliography
 \appendix

@@ -1,8 +1,6 @@
 Model,Parameter,Value,Procs,AU (%),I/O (MB/s)
-unet3d_h100_custom,baseline,,1,0.0,0.0
 unet3d_h100_custom,baseline,,1,33.67,974.53
 unet3d_h100_custom,baseline,,2,36.37,2001.29
-unet3d_h100_custom,baseline,,4,0.0,0.0
 unet3d_h100_custom,baseline,,4,58.85,5699.43
 unet3d_h100_custom,baseline,,6,86.52,10474.97
 unet3d_h100_custom,baseline,,8,77.94,9436.62
@@ -13,18 +11,14 @@ unet3d_h100_custom,checkpoint,False,4,19.75,1913.21
 unet3d_h100_custom,epochs,between_checkpoints_1,4,19.83,1919.31
 unet3d_h100_custom,file,shuffle_off,4,57.64,5582.8
 unet3d_h100_custom,file,shuffle_random,4,57.19,5538.74
-unet3d_h100_custom,format,png,4,0.0,0.0
 unet3d_h100_custom,format,png,4,21.08,2041.59
 unet3d_h100_custom,format,hdf5,4,97.53,9446.73
-unet3d_h100_custom,format,hdf5,4,0.0,0.0
 unet3d_h100_custom,prefetch,size_2,4,19.79,1917.13
 unet3d_h100_custom,prefetch,size_8,4,19.97,1933.26
 unet3d_h100_custom,read,threads_16,4,80.5,7796.89
 unet3d_h100_custom,read,threads_8,4,80.87,7833.28
 unet3d_h100_custom,read,threads_1,4,27.51,2664.03
-unet3d_h100_custom,record,length_bytes_536870912,4,0.0,0.0
 unet3d_h100_custom,record,length_bytes_536870912,4,19.83,7034.25
-unet3d_h100_custom,record,length_bytes_10485760,4,0.0,0.0
 unet3d_h100_custom,record,length_bytes_10485760,4,72.87,504.78
 unet3d_h100_custom,sample,shuffle_off,4,57.58,5576.52
 unet3d_h100_custom,sample,shuffle_random,4,58.0,5617.6
